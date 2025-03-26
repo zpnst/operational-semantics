@@ -4,7 +4,6 @@ require_relative "includes/operations.rb"
 require_relative "includes/flow.rb"
 
 class Evaluator < Struct.new(:expr, :envi)
-
     def initialize(expr, envi = {})
         super(expr, envi)
     end

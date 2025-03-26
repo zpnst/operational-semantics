@@ -28,7 +28,7 @@ class Assign < Struct.new(:name, :expr)
     end
     def reduce(envi)
         if expr.reducible?
-            [Assign.new(name, expr.reduce(envi)), envi]
+            [Assign.new(name, expr.reduce(envi)[0]), envi]
         else
             [DoNothing.new, envi.merge({ name => expr })]
         end
@@ -49,6 +49,6 @@ class Variable < Struct.new(:name)
     end
 
     def reduce(envi)
-        envi[name]
+        [envi[name], envi]
     end
 end

@@ -31,7 +31,7 @@ class If < Struct.new(:condition, :consequence, :alternative)
     end
     def reduce(envi)
         if condition.reducible?
-            [If.new(condition.reduce(envi), consequence, alternative), envi]
+            [If.new(condition.reduce(envi)[0], consequence, alternative), envi]
         else
             case condition
             when Boolean.new(true)

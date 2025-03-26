@@ -13,11 +13,11 @@ class Add < Struct.new(:left, :right)
 
     def reduce(envi)
         if left.reducible?
-            Add.new(left.reduce(envi), right)
+            [Add.new(left.reduce(envi)[0], right), envi]
         elsif right.reducible?
-            Add.new(left, right.reduce(envi))
+            [Add.new(left, right.reduce(envi)[0]), envi]
         else
-            Number.new(left.value + right.value)
+            [Number.new(left.value + right.value), envi]
         end
     end
 end
@@ -37,11 +37,11 @@ class Multiply < Struct.new(:left, :right)
 
     def reduce(envi)
         if left.reducible?
-            Multiply.new(left.reduce(envi), right)
+            [Multiply.new(left.reduce(envi)[0], right), envi]
         elsif right.reducible?
-            Multiply.new(left, right.reduce(envi))
+            [Multiply.new(left, right.reduce(envi)[0]), envi]
         else
-            Number.new(left.value * right.value)
+            [Number.new(left.value * right.value), envi]
         end
     end
 end
@@ -61,11 +61,11 @@ class LessThan < Struct.new(:left, :right)
 
     def reduce(envi)
         if left.reducible?
-            LessThan.new(left.reduce(envi), right)
+            [LessThan.new(left.reduce(envi)[0], right), envi]
         elsif right.reducible?
-            LessThan.new(left, right.reduce(envi))
+            [LessThan.new(left, right.reduce(envi)[0]), envi]
         else
-            Boolean.new(left.value < right.value)
+            [Boolean.new(left.value < right.value), envi]
         end
     end
 end
@@ -85,11 +85,11 @@ class MoreThan < Struct.new(:left, :right)
 
     def reduce(envi)
         if left.reducible?
-            LessThan.new(left.reduce(envi), right)
+            [LessThan.new(left.reduce(envi)[0], right), envi]
         elsif right.reducible?
-            LessThan.new(left, right.reduce(envi))
+            [LessThan.new(left, right.reduce(envi)[0]), envi]
         else
-            Boolean.new(left.value > right.value)
+            [Boolean.new(left.value > right.value), envi]
         end
     end
 end
