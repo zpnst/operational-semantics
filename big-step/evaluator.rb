@@ -8,7 +8,7 @@ class Evaluator < Struct.new(:expr, :envi)
         super(expr, envi)
     end
 
-    def do
+    def run
         result = expr.evaluate(envi)
         puts result
     end
